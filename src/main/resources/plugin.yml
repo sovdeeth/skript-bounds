@@ -1,4 +1,5 @@
 name: skript-bounds
 main: com.sovdee.skriptbounds.SkriptBounds
-version: 1.19
+version: 1.0.0
+api-version: 1.19
 depend: [Skript]
