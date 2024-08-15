@@ -5,9 +5,10 @@ import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser.ParseResult
 import ch.njol.util.Kleenean
 import com.sovdee.skriptbounds.bounds.AxisAlignedBox
+import com.sovdee.skriptbounds.bounds.BoundingBox
 import java.util.*
 
-class ExprDimensions : SimplePropertyExpression<AxisAlignedBox, Double>() {
+class ExprDimensions : SimplePropertyExpression<BoundingBox, Double>() {
 
     companion object {
         init {
@@ -27,7 +28,9 @@ class ExprDimensions : SimplePropertyExpression<AxisAlignedBox, Double>() {
         return super.init(expressions, matchedPattern, isDelayed, parseResult)
     }
 
-    override fun convert(from: AxisAlignedBox): Double {
+    override fun convert(from: BoundingBox): Double? {
+        if (from !is AxisAlignedBox)
+            return null
         return when (dimension) {
             Dimension.LENGTH -> from.length
             Dimension.WIDTH -> from.width

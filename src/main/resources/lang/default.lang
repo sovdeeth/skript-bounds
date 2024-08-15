@@ -1,0 +1,4 @@
+version: $version
+
+types:
+    boundingbox: bounding box

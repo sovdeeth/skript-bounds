@@ -26,6 +26,9 @@ kotlin {
     jvmToolchain(21)
 }
 
+tasks.processResources {
+    expand(project.properties)
+}
 
 tasks.named<KotlinCompilationTask<*>>("compileKotlin").configure {
     compilerOptions {
