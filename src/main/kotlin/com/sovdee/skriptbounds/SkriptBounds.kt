@@ -39,7 +39,7 @@ class SkriptBounds : JavaPlugin() {
     companion object {
 
         private lateinit var logger: Logger
-        lateinit var addon: SkriptAddon
+        lateinit var addon: SkriptAddon; private set
 
         fun info(string: String) {
             logger.info(string)
