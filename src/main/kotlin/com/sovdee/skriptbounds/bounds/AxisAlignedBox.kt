@@ -7,6 +7,31 @@ import org.joml.Vector3d
 
 data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : BoundingBox {
 
+    var width: Double
+        get() = max.x - min.x
+        set(value) {
+            val mid = (max.x + min.x) / 2
+            min.x = mid - value / 2
+            max.x = mid + value / 2
+        }
+
+    var length: Double
+        get() = max.z - min.z
+        set(value) {
+            val mid = (max.z + min.z) / 2
+            min.z = mid - value / 2
+            max.z = mid + value / 2
+        }
+
+    var height: Double
+        get() = max.y - min.y
+        set(value) {
+            val mid = (max.y + min.y) / 2
+            min.y = mid - value / 2
+            max.y = mid + value / 2
+        }
+
+
     @Suppress("DuplicatedCode")
     fun rotateX() {
         val between = max.sub(min, Vector3d()).div(2.0)
