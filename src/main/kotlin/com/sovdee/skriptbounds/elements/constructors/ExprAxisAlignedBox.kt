@@ -9,6 +9,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import com.sovdee.skriptbounds.bounds.AxisAlignedBox
+import com.sovdee.skriptbounds.bounds.BoundingBox
 import com.sovdee.skriptbounds.bukkit.toPosition
 import org.bukkit.event.Event
 import org.joml.Vector3d
@@ -19,11 +20,11 @@ import org.joml.Vector3d
     "Axis aligned boxes are aligned to Minecraft's axis and therefore cannot rotate freely. " +
     "This is what Minecraft uses for hitboxes and block collisions."
 )
-class ExprAxisAlignedBox : SimpleExpression<AxisAlignedBox>() {
+class ExprAxisAlignedBox : SimpleExpression<BoundingBox>() {
 
     companion object {
         init {
-            Skript.registerExpression(ExprAxisAlignedBox::class.java, AxisAlignedBox::class.java, ExpressionType.COMBINED,
+            Skript.registerExpression(ExprAxisAlignedBox::class.java, BoundingBox::class.java, ExpressionType.COMBINED,
                 "[a[n]] [axis(-| )aligned] bounding box between %vector/location% and %vector/location%",
                 "[a[n]] [axis(-| )aligned] bounding box from %vector/location% to %vector/location%"
             )
@@ -44,7 +45,7 @@ class ExprAxisAlignedBox : SimpleExpression<AxisAlignedBox>() {
         return true
     }
 
-    override fun get(event: Event): Array<AxisAlignedBox>? {
+    override fun get(event: Event): Array<BoundingBox>? {
         val cornerA = toPosition(this.cornerA.getSingle(event))
         val cornerB = toPosition(this.cornerB.getSingle(event))
         if (cornerA == null || cornerB == null)
@@ -56,7 +57,7 @@ class ExprAxisAlignedBox : SimpleExpression<AxisAlignedBox>() {
 
     override fun isSingle() = true
 
-    override fun getReturnType() = AxisAlignedBox::class.java
+    override fun getReturnType() = BoundingBox::class.java
 
     override fun toString(event: Event?, debug: Boolean) = "an axis aligned bounding box between ${cornerA.toString(event, debug)} and ${cornerB.toString(event, debug)}"
 
