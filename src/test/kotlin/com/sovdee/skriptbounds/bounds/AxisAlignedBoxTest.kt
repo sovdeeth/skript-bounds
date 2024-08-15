@@ -16,16 +16,62 @@ internal class AxisAlignedBoxTest {
     }
 
     @Test
-    fun shift() {
-        box.shift(Vector3d(2.0, 3.0, 4.0))
+    fun translate() {
+        box.translate(Vector3d(2.0, 3.0, 4.0))
         assertTrue(box.min.equals(2.0, 3.0, 4.0), "Failed to shift min")
         assertTrue(box.max.equals(3.0, 4.0, 5.0), "Failed to shift max")
+    }
+
+    @Test
+    fun rotateX() {
+        box.min.set(-2.0, -1.0, 0.0)
+        box.rotateX()
+        assertTrue(box.min.equals(-2.0, -0.5, -0.5), "Failed to rotate min")
+        assertTrue(box.max.equals(1.0, 0.5, 1.5), "Failed to rotate max")
+    }
+
+    @Test
+    fun rotateY() {
+        box.min.set(-2.0, -1.0, 0.0)
+        box.rotateY()
+        assertTrue(box.min.equals(-1.0, -1.0, -1.0), "Failed to rotate min")
+        assertTrue(box.max.equals(0.0, 1.0, 2.0), "Failed to rotate max")
+    }
+
+    @Test
+    fun rotateZ() {
+        box.min.set(-2.0, -1.0, 0.0)
+        box.rotateZ()
+        assertTrue(box.min.equals(-1.5, -1.5, 0.0), "Failed to rotate min")
+        assertTrue(box.max.equals(0.5, 1.5, 1.0), "Failed to rotate max")
+    }
+
+    @Test
+    fun scale() {
+        box.scale(2.0)
+        assertTrue(box.min.equals(-0.5, -0.5, -0.5), "Failed to scale min")
+        assertTrue(box.max.equals(1.5, 1.5, 1.5), "Failed to scale max")
+    }
+
+    @Test
+    fun expandUniform() {
+        box.expandUniform(2.0)
+        assertTrue(box.min.equals(-2.0, -2.0, -2.0), "Failed to expand min")
+        assertTrue(box.max.equals(3.0, 3.0, 3.0), "Failed to expand max")
+    }
+
+    @Test
+    fun expandToContain() {
+        box.expandToContain(Vector3d(-1.0, 3.0, 0.5))
+        assertTrue(box.min.equals(-1.0, 0.0, 0.0), "Failed to expand min")
+        assertTrue(box.max.equals(1.0, 3.0, 1.0), "Failed to expand max")
     }
 
     @Test
     fun contains() {
         assertTrue(Vector3d(0.0, 0.0, 0.0) in box, "Failed to contain zero vector")
         assertTrue(Vector3d(0.9999, 0.5, 0.3) in box, "Failed to contain vector")
+        assertTrue(Vector3d(0.5, 0.0, 0.0) in box, "Failed to contain face vector")
         assertFalse(Vector3d(-0.01, 0.03, 0.02) in box, "Unexpectedly contained vector")
     }
 
@@ -53,7 +99,7 @@ internal class AxisAlignedBoxTest {
             for (testBox in testBoxes) {
                 assertTrue(box.intersects(testBox), "Failed to intersect $testBox")
             }
-            box.shift(Vector3d(1.5, 1.5, 1.5))
+            box.translate(Vector3d(5.0, 5.0, 5.0))
             for (testBox in testBoxes) {
                 assertFalse(box.intersects(testBox), "Unexpectedly intersected $testBox")
             }
