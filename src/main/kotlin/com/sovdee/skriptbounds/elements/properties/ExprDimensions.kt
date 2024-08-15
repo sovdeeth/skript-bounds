@@ -12,7 +12,7 @@ class ExprDimensions : SimplePropertyExpression<BoundingBox, Double>() {
 
     companion object {
         init {
-            register(ExprDimensions::class.java, Double::class.java, "bound[ing box] (length|width|height)", "%boundingboxes%")
+            register(ExprDimensions::class.java, Double::class.java, "bound[ing box] (length|width|height)", "%boundingboxs%")
         }
     }
 

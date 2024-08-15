@@ -9,7 +9,7 @@ class Types {
         init {
             Classes.registerClass(
                 ClassInfo(BoundingBox::class.java, "boundingbox")
-                    .user("bounding ?box(es)?")
+                    .user("bounding ?box(e?s)?")
                     .name("Bounding Box")
                     .description(
                         "Represents any sort of bounding box, be it align, orientable, or a sphere."
