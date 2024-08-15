@@ -70,6 +70,16 @@ data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : BoundingBox {
         }
     }
 
+    fun intersection(other: AxisAlignedBox): AxisAlignedBox {
+        return this.intersection(other, this)
+    }
+
+    fun intersection(other: AxisAlignedBox, dest: AxisAlignedBox): AxisAlignedBox {
+        min.max(other.min, dest.min)
+        max.min(other.max, dest.max)
+        return dest
+    }
+
     override fun contains(point: Vector3d): Boolean {
         return point.isStrictlyGTE(min) && point.isStrictlyLTE(max)
     }
