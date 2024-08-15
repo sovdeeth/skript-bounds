@@ -25,6 +25,11 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           path: build/libs/*.jar
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "build/test/results/**/TEST-*.xml"
+        if: always()
 
   skript_test:
     runs-on: ubuntu-latest
