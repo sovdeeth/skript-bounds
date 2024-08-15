@@ -12,7 +12,7 @@ class ExprDimensions : SimplePropertyExpression<BoundingBox, Double>() {
 
     companion object {
         init {
-            register(ExprDimensions::class.java, Double::class.javaObjectType, "bound[ing box] (length|width|height)", "boundingboxes")
+            register(ExprDimensions::class.java, Double::class.javaObjectType, "bound[ing box] (0:length|1:width|2:height)", "boundingboxes")
         }
     }
 
@@ -38,9 +38,9 @@ class ExprDimensions : SimplePropertyExpression<BoundingBox, Double>() {
         }
     }
 
-    override fun getReturnType() = Double::class.java
+    override fun getReturnType() = Double::class.javaObjectType
 
-    override fun getPropertyName() = dimension.toString().lowercase(Locale.getDefault())
+    override fun getPropertyName() = "bound " + dimension.toString().lowercase(Locale.getDefault())
 
     private enum class Dimension {
         LENGTH, WIDTH, HEIGHT
