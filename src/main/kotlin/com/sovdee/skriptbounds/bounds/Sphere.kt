@@ -8,7 +8,6 @@ data class Sphere(val center: Vector3d, val radiusSquared: Double) : BoundingBox
         return when (other) {
             is Sphere -> Intersectiond.testSphereSphere(center, radiusSquared, other.center, other.radiusSquared)
             is AxisAlignedBox -> Intersectiond.testAabSphere(other.min, other.max, center, radiusSquared)
-            else -> false
         }
     }
 

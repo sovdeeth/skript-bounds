@@ -2,7 +2,7 @@ package com.sovdee.skriptbounds.bounds
 
 import org.joml.Vector3d
 
-interface BoundingBox {
+sealed interface BoundingBox {
 
     fun intersects(other: BoundingBox): Boolean
 
