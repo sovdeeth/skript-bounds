@@ -46,7 +46,7 @@ jobs:
         with:
           path: extra-plugins/
           merge-multiple: true
-          pattern: "*[0-9].jar"
+          pattern: "**/*[0-9].jar"
 
       - name: Run tests
         uses: SkriptLang/skript-test-action@v1.1
