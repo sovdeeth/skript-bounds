@@ -44,8 +44,8 @@ class ExprSphere : SimpleExpression<Sphere>() {
         isDelayed: Kleenean,
         parseResult: SkriptParser.ParseResult
     ): Boolean {
-        center = expressions[0]
-        radius = expressions[1] as Expression<Number>
+        radius = expressions[0] as Expression<Number>
+        center = expressions[1]
         return true
     }
 
