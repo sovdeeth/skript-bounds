@@ -6,6 +6,7 @@ import ch.njol.skript.registrations.Classes
 import ch.njol.yggdrasil.Fields
 import com.sovdee.skriptbounds.bounds.AxisAlignedBox
 import com.sovdee.skriptbounds.bounds.BoundingBox
+import com.sovdee.skriptbounds.bounds.CuboidBoundingBox
 import com.sovdee.skriptbounds.bounds.Sphere
 import org.joml.Vector3d
 
@@ -17,7 +18,16 @@ class Types {
                     .user("bounding ?box(e?s)?")
                     .name("Bounding Box")
                     .description(
-                        "Represents any sort of bounding box, be it align, orientable, or a sphere."
+                        "Represents any sort of bounding box, be it axis aligned, orientable, or a sphere."
+                    )
+            )
+
+            Classes.registerClass(
+                ClassInfo(CuboidBoundingBox::class.java, "cuboidboundingbox")
+                    .user("cuboid ?bounding ?box(e?s)?")
+                    .name("Cuboid Bounding Box")
+                    .description(
+                        "Represents a cuboid bounding box, axis aligned or orientable."
                     )
             )
 
