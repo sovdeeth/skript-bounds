@@ -23,7 +23,7 @@ test "AABB dimensions":
 
     add 4 to bound width of {_a}
     add -90 to bound length of {_a}
-    add NaN to bound height of {_a}
+    add NaN value to bound height of {_a}
     assert bound width of {_a} is 9 with "wrong bound width"
     assert bound length of {_a} is 0 with "wrong bound length"
     assert bound height of {_a} is 7 with "wrong bound height"
@@ -31,14 +31,14 @@ test "AABB dimensions":
 
     remove 4 from bound width of {_a}
     remove -90 from bound length of {_a}
-    remove NaN from bound height of {_a}
+    remove NaN value from bound height of {_a}
     assert bound width of {_a} is 5 with "wrong bound width"
     assert bound length of {_a} is 90 with "wrong bound length"
     assert bound height of {_a} is 7 with "wrong bound height"
     assert bound radius of {_a} is not set with "wrong bound radius"
 
 
-test "Sphere dimensions"
+test "Sphere dimensions":
     set {_a} to a spherical bounding box of radius 1 at vector(0, 0, 0)
     assert bound radius of {_a} is 1 with "wrong bound radius"
     assert bound width of {_a} is not set with "wrong bound width"
