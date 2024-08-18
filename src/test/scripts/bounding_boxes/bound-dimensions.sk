@@ -65,7 +65,7 @@ test "Sphere dimensions":
     assert bound length of {_a} is not set with "wrong bound length"
     assert bound height of {_a} is not set with "wrong bound height"
 
-    remove -4 from bound width of {_a}
+    remove -4 from bound radius of {_a}
     remove 90 from bound length of {_a}
     assert bound radius of {_a} is 4 with "wrong bound radius"
     assert bound width of {_a} is not set with "wrong bound width"
