@@ -1,11 +1,19 @@
 package com.sovdee.skriptbounds.bounds
 
+import com.google.common.base.Preconditions
 import com.sovdee.skriptbounds.math.square
 import org.joml.Intersectiond
 import org.joml.Vector3d
 import kotlin.math.sqrt
 
-data class Sphere(val center: Vector3d, var radiusSquared: Double) : BoundingBox {
+data class Sphere(override var center: Vector3d, var radiusSquared: Double) : BoundingBox {
+
+    var radius: Double
+        get() = sqrt(radiusSquared)
+        set(value) {
+            Preconditions.checkState(value >= 0, "radius must be >= 0: $value")
+            radiusSquared = value * value
+        }
 
     override fun scale(scalingFactor: Double) {
         radiusSquared *= scalingFactor * scalingFactor

@@ -7,6 +7,8 @@ import org.joml.Vector3d
 
 sealed interface BoundingBox : Scalable, Translatable, Expandable {
 
+    var center: Vector3d
+
     fun intersects(other: BoundingBox): Boolean
 
     operator fun contains(point: Vector3d): Boolean

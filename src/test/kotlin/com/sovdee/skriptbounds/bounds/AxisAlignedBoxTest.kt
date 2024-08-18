@@ -16,6 +16,34 @@ internal class AxisAlignedBoxTest {
     }
 
     @Test
+    fun dimensions() {
+        assertTrue(box.width == 1.0, "wrong width")
+        assertTrue(box.length == 1.0, "wrong length")
+        assertTrue(box.height == 1.0, "wrong height")
+        assertTrue(box.center.equals(0.5, 0.5, 0.5), "wrong center")
+        box.width = 2.0
+        box.length = 3.0
+        box.height = 4.0
+        assertTrue(box.width == 2.0, "wrong width")
+        assertTrue(box.length == 3.0, "wrong length")
+        assertTrue(box.height == 4.0, "wrong height")
+        assertTrue(box.center.equals(0.5, 0.5, 0.5), "wrong center")
+    }
+
+    @Test
+    fun center() {
+        assertTrue(box.width == 1.0, "wrong width")
+        assertTrue(box.length == 1.0, "wrong length")
+        assertTrue(box.height == 1.0, "wrong height")
+        assertTrue(box.center.equals(0.5, 0.5, 0.5), "wrong center")
+        box.center = Vector3d(1.0, 1.0, 1.0)
+        assertTrue(box.width == 1.0, "wrong width")
+        assertTrue(box.length == 1.0, "wrong length")
+        assertTrue(box.height == 1.0, "wrong height")
+        assertTrue(box.center.equals(1.0, 1.0, 1.0), "wrong center")
+    }
+
+    @Test
     fun translate() {
         box.translate(Vector3d(2.0, 3.0, 4.0))
         assertTrue(box.min.equals(2.0, 3.0, 4.0), "Failed to shift min")

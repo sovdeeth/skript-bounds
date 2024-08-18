@@ -13,7 +13,8 @@ fun toPosition(any: Any?) : Vector3d? {
 }
 
 fun toPosition(vector: Vector?) : Vector3d? {
-    return vector?.toVector3d()
+    val v = vector?.toVector3d()
+    return if (v?.isFinite == true) v else null
 }
 
 fun toPosition(location: Location?) : Vector3d? {

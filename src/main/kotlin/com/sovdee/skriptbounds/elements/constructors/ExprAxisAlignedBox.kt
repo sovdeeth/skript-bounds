@@ -2,7 +2,9 @@ package com.sovdee.skriptbounds.elements.constructors
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
 import ch.njol.skript.doc.Name
+import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser.ParseResult
@@ -20,13 +22,21 @@ import org.joml.Vector3d
     "Axis aligned boxes are aligned to Minecraft's axis and therefore cannot rotate freely. " +
     "This is what Minecraft uses for hitboxes and block collisions."
 )
-class ExprAxisAlignedBox : SimpleExpression<BoundingBox>() {
+@Examples(
+    "set {_box} to a bounding box from player's location to player's target block",
+    "",
+    "set {_box} to an axis aligned bounding box from vector(-10, -10, -10) to vector(10, 10, 10)",
+    "shift bound {_box} by vector(5, 10, 5)"
+)
+@Since("1.0.0")
+class ExprAxisAlignedBox : SimpleExpression<AxisAlignedBox>() {
 
     companion object {
         init {
-            Skript.registerExpression(ExprAxisAlignedBox::class.java, BoundingBox::class.java, ExpressionType.COMBINED,
+            Skript.registerExpression(ExprAxisAlignedBox::class.java, AxisAlignedBox::class.java, ExpressionType.COMBINED,
                 "[a[n]] [axis(-| )aligned] bounding box between %vector/location% and %vector/location%",
                 "[a[n]] [axis(-| )aligned] bounding box from %vector/location% to %vector/location%"
+//                "[a[n]] [axis(-| )aligned] bounding box around %boundingbox%"
             )
         }
     }
@@ -45,7 +55,7 @@ class ExprAxisAlignedBox : SimpleExpression<BoundingBox>() {
         return true
     }
 
-    override fun get(event: Event): Array<BoundingBox>? {
+    override fun get(event: Event): Array<AxisAlignedBox>? {
         val cornerA = toPosition(this.cornerA.getSingle(event))
         val cornerB = toPosition(this.cornerB.getSingle(event))
         if (cornerA == null || cornerB == null)
@@ -57,8 +67,9 @@ class ExprAxisAlignedBox : SimpleExpression<BoundingBox>() {
 
     override fun isSingle() = true
 
-    override fun getReturnType() = BoundingBox::class.java
+    override fun getReturnType() = AxisAlignedBox::class.java
 
-    override fun toString(event: Event?, debug: Boolean) = "an axis aligned bounding box between ${cornerA.toString(event, debug)} and ${cornerB.toString(event, debug)}"
+    override fun toString(event: Event?, debug: Boolean)
+        = "an axis aligned bounding box between ${cornerA.toString(event, debug)} and ${cornerB.toString(event, debug)}"
 
 }

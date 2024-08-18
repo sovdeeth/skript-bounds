@@ -1,36 +1,52 @@
 package com.sovdee.skriptbounds.bounds
 
+import com.google.common.base.Preconditions
 import com.sovdee.skriptbounds.math.isStrictlyGTE
 import com.sovdee.skriptbounds.math.isStrictlyLTE
+import com.sovdee.skriptbounds.math.midpoint
 import org.joml.Intersectiond
 import org.joml.Vector3d
 
-data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : BoundingBox {
+data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : CuboidBoundingBox {
 
-    var width: Double
+    /**
+     * The computed width (x) of the box
+     */
+    override var width: Double
         get() = max.x - min.x
         set(value) {
+            Preconditions.checkState(value >= 0, "width must be >= 0: $value")
             val mid = (max.x + min.x) / 2
             min.x = mid - value / 2
             max.x = mid + value / 2
         }
 
-    var length: Double
+    override var length: Double
         get() = max.z - min.z
         set(value) {
+            Preconditions.checkState(value >= 0, "length must be >= 0: $value")
             val mid = (max.z + min.z) / 2
             min.z = mid - value / 2
             max.z = mid + value / 2
         }
 
-    var height: Double
+    override var height: Double
         get() = max.y - min.y
         set(value) {
+            Preconditions.checkState(value >= 0, "height must be >= 0: $value")
             val mid = (max.y + min.y) / 2
             min.y = mid - value / 2
             max.y = mid + value / 2
         }
 
+    override var center: Vector3d
+        get() {
+            return min.midpoint(max, Vector3d())
+        }
+        set(value) {
+            val currentCenter = min.midpoint(max, Vector3d())
+            this.translate(value.sub(currentCenter, currentCenter))
+        }
 
     @Suppress("DuplicatedCode")
     fun rotateX() {
@@ -71,6 +87,7 @@ data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : BoundingBox {
         between.mul(scalingFactor)
         half.add(between, max)
         half.sub(between, min)
+        fixMinMax()
     }
 
     override fun translate(direction: Vector3d) {
@@ -81,11 +98,17 @@ data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : BoundingBox {
     override fun expandUniform(amount: Double) {
         min.add(-amount, -amount, -amount)
         max.add(amount, amount, amount)
+        fixMinMax()
     }
 
     override fun expandToContain(point: Vector3d) {
         min.min(point)
         max.max(point)
+    }
+
+    private fun fixMinMax() {
+        min.min(max, min)
+        max.max(min, max)
     }
 
     override fun intersects(other: BoundingBox): Boolean {
