@@ -6,17 +6,18 @@ import org.joml.Vector3d
 
 fun toPosition(any: Any?) : Vector3d? {
     return when (any) {
-        is Vector -> toPosition(any)
-        is Location -> toPosition(any)
+        is Vector -> any.toPosition()
+        is Location -> any.toPosition()
         else -> null
     }
 }
 
-fun toPosition(vector: Vector?) : Vector3d? {
-    val v = vector?.toVector3d()
+fun Vector?.toPosition() : Vector3d? {
+    val v = this?.toVector3d()
     return if (v?.isFinite == true) v else null
 }
 
-fun toPosition(location: Location?) : Vector3d? {
-    return location?.toVector()?.toVector3d()
+fun Location?.toPosition() : Vector3d? {
+    val v = this?.toVector()?.toVector3d()
+    return if (v?.isFinite == true) v else null
 }

@@ -51,8 +51,7 @@ class ExprDimensions : SimplePropertyExpression<BoundingBox, Double>() {
                 else -> null
             }
 
-        assert(false)
-        return null
+        throw IllegalArgumentException("Bounding box type '${from::class.simpleName}' is not supported by ExprDimensions.")
     }
 
     override fun acceptChange(mode: ChangeMode): Array<Class<*>>? {

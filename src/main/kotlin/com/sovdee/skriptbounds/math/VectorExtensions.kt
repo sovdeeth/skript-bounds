@@ -26,6 +26,15 @@ fun Vector3d.copy(): Vector3d {
     return this.clone() as Vector3d
 }
 
+operator fun Vector3d.plus(other: Vector3d) : Vector3d {
+    return this.add(other, Vector3d())
+}
+
+operator fun Vector3d.minus(other: Vector3d) : Vector3d {
+    return this.sub(other, Vector3d())
+}
+
+
 /**
  * Sets this vector to the midpoint of the line between the two vectors
  * @param other The vector to use as the other end of the line segment

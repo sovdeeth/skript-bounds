@@ -1,5 +1,6 @@
 package com.sovdee.skriptbounds.bounds
 
+import com.sovdee.skriptbounds.math.plus
 import org.joml.Vector3d
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -41,6 +42,11 @@ internal class AxisAlignedBoxTest {
         assertTrue(box.length == 1.0, "wrong length")
         assertTrue(box.height == 1.0, "wrong height")
         assertTrue(box.center.equals(1.0, 1.0, 1.0), "wrong center")
+        box.center += Vector3d(1.0, 1.0, 1.0)
+        assertTrue(box.width == 1.0, "wrong width")
+        assertTrue(box.length == 1.0, "wrong length")
+        assertTrue(box.height == 1.0, "wrong height")
+        assertTrue(box.center.equals(2.0, 2.0, 2.0), "wrong center: ${box.center}")
     }
 
     @Test
