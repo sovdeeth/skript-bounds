@@ -1,6 +1,6 @@
 test "bound centers":
     set {_aab} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
-    set {_sphere} to spherical bounding box of radius 1 at vector (0.5, -1, 3)
+    set {_sphere} to spherical bounding box of radius 1 at vector(0.5, -1, 3)
 
     assert bound center of {_aab} is vector(0.5, 0.5, 0.5) with "wrong aab center"
     assert bound center of {_sphere} is vector(0.5, -1, 3) with "wrong sphere center"
