@@ -18,8 +18,8 @@ class ExprDimensions : SimplePropertyExpression<BoundingBox, Double>() {
     companion object {
         init {
             Skript.registerExpression(ExprDimensions::class.java, Double::class.javaObjectType, ExpressionType.PROPERTY,
-                "[the] bound[ing box] (0:length|1:width|2:height) of %cuboidboundingboxes%",
-                "[the] bound[ing box] (3:radius) of %sphericalboundingboxes%"
+                "[the] (0:length|1:width|2:height) of bound[s|ing box[es]] %cuboidboundingboxes%",
+                "[the] (3:radius) of bound[s|ing box[es]] %sphericalboundingboxes%"
                 )
         }
     }

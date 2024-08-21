@@ -8,4 +8,8 @@ sealed interface CuboidBoundingBox : BoundingBox {
     var width: Double
     var height: Double
 
+    val min: Vector3d
+    val max: Vector3d
+
+    fun fixMinMax()
 }

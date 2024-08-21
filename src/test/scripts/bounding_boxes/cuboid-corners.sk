@@ -1,0 +1,19 @@
+test "cuboid corners":
+
+    set {_aab} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+
+    assert min corner of bound {_aab} is vector(0.0, 0.0, 0.0) with "wrong aab min"
+    assert max corner of bound {_aab} is vector(1.0, 1.0, 1.0) with "wrong aab max"
+
+    set min corner of {_aab} to vector(0, 10, 0)
+    assert min corner of bound {_aab} is vector(0.0, 1.0, 0.0) with "wrong aab min"
+    assert max corner of bound {_aab} is vector(1.0, 10.0, 1.0) with "wrong aab max"
+
+    add vector(-1, -1, -1) to max corner of bound {_aab}
+    assert min corner of bound {_aab} is vector(0.0, 1.0, 0.0) with "wrong aab min"
+    assert max corner of bound {_aab} is vector(0.0, 9.0, 0.0) with "wrong aab max"
+    assert width of bound {_aaB} is 0 with "width was not 0"
+
+    remove vector(-1, -1, -1) from min corner of bound {_aab}
+    assert min corner of bound {_aab} is vector(0.0, 2.0, 0.0) with "wrong aab min"
+    assert max corner of bound {_aab} is vector(1.0, 9.0, 1.0) with "wrong aab max"

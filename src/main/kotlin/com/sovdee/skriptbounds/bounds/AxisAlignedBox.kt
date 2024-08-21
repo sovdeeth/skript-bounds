@@ -7,7 +7,7 @@ import com.sovdee.skriptbounds.math.midpoint
 import org.joml.Intersectiond
 import org.joml.Vector3d
 
-data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : CuboidBoundingBox {
+data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d) : CuboidBoundingBox {
 
     /**
      * The computed width (x) of the box
@@ -106,7 +106,7 @@ data class AxisAlignedBox(val min: Vector3d, val max: Vector3d) : CuboidBounding
         max.max(point)
     }
 
-    private fun fixMinMax() {
+    override fun fixMinMax() {
         min.min(max, min)
         max.max(min, max)
     }
