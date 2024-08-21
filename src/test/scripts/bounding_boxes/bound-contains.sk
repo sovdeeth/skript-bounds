@@ -11,7 +11,8 @@ test "bound contains":
     set {_point} to vector(1,1,1)
     assert bound {_aab} contains {_point} with "aab failed to contain point"
     assert bound {_sphere} doesn't contain {_point} with "sphere contained point unexpectedly"
-    assert bounds {_aab} and {_sphere} don't contain {_point} with "AND contained point unexpectedly"
+    assert bounds {_aab} and {_sphere} don't contain {_point} to fail with "AND failed to contain point"
+    assert bounds {_aab} and {_sphere} contains {_point} to fail with "AND failed to not contain point"
     assert bounds {_aab} or {_sphere} contain {_point} with "OR failed to contain point"
     assert bounds {_aab} or {_sphere} don't contain {_point} with "OR failed to not contain point"
 
