@@ -10,7 +10,6 @@ import ch.njol.util.Kleenean
 import com.sovdee.skriptbounds.bounds.BoundingBox
 import com.sovdee.skriptbounds.bukkit.toPosition
 import org.bukkit.event.Event
-import org.joml.Vector3d
 
 class CondBoundContains : Condition(), VerboseAssert {
 
@@ -47,24 +46,6 @@ class CondBoundContains : Condition(), VerboseAssert {
         val positions = this.positions.getAll(event).mapNotNull { toPosition(it) }.toTypedArray()
         if (positions.isEmpty())
             return isNegated
-
-        /* truth table
-        and  |  negated  |  % within  |  result
-        1       1           0           true
-        0       1           0           true
-        1       0           0           false
-        0       0           0           false
-
-        1       1           50          false
-        0       1           50          true
-        1       0           50          false
-        0       0           50          true
-
-        1       1           100         false
-        0       1           100         false
-        1       0           100         true
-        0       0           100         true
-        */
 
         val isAnd = this.positions.and
         return boundingBoxes.check(event) { box ->
