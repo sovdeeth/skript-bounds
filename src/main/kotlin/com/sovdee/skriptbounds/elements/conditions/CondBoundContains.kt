@@ -38,7 +38,7 @@ class CondBoundContains : Condition(), VerboseAssert {
         @Suppress("UNCHECKED_CAST")
         boundingBoxes = expressions[if (matchedPattern > 1) 1 else 0] as Expression<BoundingBox>
         positions = expressions[if (matchedPattern > 1) 0 else 1]!!
-        isNegated = matchedPattern % 2 == 0
+        isNegated = matchedPattern % 2 == 1
         this.matchedPattern = matchedPattern
         return true
     }
