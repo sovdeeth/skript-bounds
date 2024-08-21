@@ -67,6 +67,6 @@ class ExprCuboidCorners : PropertyExpression<CuboidBoundingBox, Vector>() {
 
     override fun getReturnType() = Vector::class.java
 
-    override fun toString(event: Event?, debug: Boolean) = "${if (min) "minimum" else "maximum"} corner of ${boxes.toString(event, debug)}"
+    override fun toString(event: Event?, debug: Boolean) = "${if (min) "minimum" else "maximum"} corner of ${expr.toString(event, debug)}"
 
 }
