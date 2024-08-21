@@ -59,7 +59,7 @@ class ExprCuboidCorners : PropertyExpression<CuboidBoundingBox, Vector>() {
         val bounds = expr.getArray(event)
         when (mode) {
             ChangeMode.ADD -> bounds.forEach { getCorner(it).add(deltaV); it.fixMinMax() }
-            ChangeMode.REMOVE -> bounds.forEach { getCorner(it).min(deltaV); it.fixMinMax() }
+            ChangeMode.REMOVE -> bounds.forEach { getCorner(it).sub(deltaV); it.fixMinMax() }
             ChangeMode.SET -> bounds.forEach { getCorner(it).set(deltaV); it.fixMinMax() }
             else -> throw IllegalArgumentException("Change mode '${mode}' is not supported by ExprCuboidCorners.")
         }
