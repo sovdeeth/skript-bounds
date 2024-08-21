@@ -5,7 +5,7 @@ test "cuboid corners":
     assert min corner of bound {_aab} is vector(0.0, 0.0, 0.0) with "wrong aab min"
     assert max corner of bound {_aab} is vector(1.0, 1.0, 1.0) with "wrong aab max"
 
-    set min corner of {_aab} to vector(0, 10, 0)
+    set min corner of bound {_aab} to vector(0, 10, 0)
     assert min corner of bound {_aab} is vector(0.0, 1.0, 0.0) with "wrong aab min"
     assert max corner of bound {_aab} is vector(1.0, 10.0, 1.0) with "wrong aab max"
 

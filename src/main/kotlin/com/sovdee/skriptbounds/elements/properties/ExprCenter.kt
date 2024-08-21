@@ -1,7 +1,9 @@
 package com.sovdee.skriptbounds.elements.properties
 
+import ch.njol.skript.Skript
 import ch.njol.skript.classes.Changer.ChangeMode
 import ch.njol.skript.expressions.base.SimplePropertyExpression
+import ch.njol.skript.lang.ExpressionType
 import com.sovdee.skriptbounds.bounds.BoundingBox
 import com.sovdee.skriptbounds.bukkit.toPosition
 import com.sovdee.skriptbounds.math.minus
@@ -14,7 +16,10 @@ class ExprCenter : SimplePropertyExpression<BoundingBox, Vector>() {
 
     companion object {
         init {
-            register(ExprCenter::class.java, Vector::class.java, "bound[ing box] center", "boundingboxes")
+            Skript.registerExpression(ExprCenter::class.java, Vector::class.java, ExpressionType.PROPERTY,
+                "center[s] of bound[s|ing box[es]] %boundingboxes%",
+                "bound[s|ing box[es]] %boundingboxes%'[s] center[s]"
+            )
         }
     }
 
