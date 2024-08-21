@@ -25,7 +25,6 @@ class ExprCuboidCorners : PropertyExpression<CuboidBoundingBox, Vector>() {
         }
     }
 
-    private lateinit var boxes : Expression<CuboidBoundingBox>
     private var min : Boolean = false
     private lateinit var getCorner : (CuboidBoundingBox) -> Vector3d
 
@@ -37,7 +36,7 @@ class ExprCuboidCorners : PropertyExpression<CuboidBoundingBox, Vector>() {
     ): Boolean {
         min = parseResult.hasTag("min")
         @Suppress("UNCHECKED_CAST")
-        boxes = expressions[0] as Expression<CuboidBoundingBox>
+        expr = expressions[0] as Expression<CuboidBoundingBox>
 
         getCorner = if (min) { box : CuboidBoundingBox -> box.min} else { box : CuboidBoundingBox -> box.max}
 
