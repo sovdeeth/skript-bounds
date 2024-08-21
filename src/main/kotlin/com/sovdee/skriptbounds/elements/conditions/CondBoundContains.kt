@@ -5,10 +5,12 @@ import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser.ParseResult
 import ch.njol.skript.lang.VerboseAssert
+import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import com.sovdee.skriptbounds.bounds.BoundingBox
 import com.sovdee.skriptbounds.bukkit.toPosition
 import org.bukkit.event.Event
+import org.joml.Vector3d
 
 class CondBoundContains : Condition(), VerboseAssert {
 
@@ -42,7 +44,7 @@ class CondBoundContains : Condition(), VerboseAssert {
     }
 
     override fun check(event: Event): Boolean {
-        val positions = this.positions.getAll(event).mapNotNull { toPosition(it) }
+        val positions = this.positions.getAll(event).mapNotNull { toPosition(it) }.toTypedArray()
         if (positions.isEmpty())
             return isNegated
 
@@ -66,18 +68,7 @@ class CondBoundContains : Condition(), VerboseAssert {
 
         val isAnd = this.positions.and
         return boundingBoxes.check(event) { box ->
-            var result = isAnd
-            for (vector in positions) {
-                val matches = box.contains(vector) xor isNegated
-                if (!matches && isAnd) {
-                    result = false
-                    break
-                } else if (matches && !isAnd) {
-                    result = true
-                    break
-                }
-            }
-            result
+            SimpleExpression.check(positions, box::contains, isNegated, isAnd)
         }
     }
 
