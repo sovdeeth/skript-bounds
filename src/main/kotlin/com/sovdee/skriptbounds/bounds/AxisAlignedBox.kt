@@ -107,8 +107,9 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
     }
 
     override fun fixMinMax() {
-        min.min(max, min)
+        val temp = min.min(max, Vector3d())
         max.max(min, max)
+        min.set(temp)
     }
 
     override fun intersects(other: BoundingBox): Boolean {
