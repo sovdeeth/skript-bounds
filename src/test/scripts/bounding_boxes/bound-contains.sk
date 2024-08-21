@@ -37,7 +37,8 @@ test "bound contains":
     set {_points::*} to vector(-0.5,0,0), vector(0, -1, 0)
     assert bound {_aab} doesn't contain {_points::*} with "aab contained points unexpectedly"
     assert bound {_sphere} contains {_points::*} with "sphere failed to contain points"
-    assert bounds {_aab} and {_sphere} don't contain {_points::*} with "AND contained points unexpectedly"
+    assert bounds {_aab} and {_sphere} don't contain {_points::*} to fail with "AND failed to contain any point"
+    assert bounds {_aab} and {_sphere} contain {_points::*} to fail with "AND failed to not contain any point"
     assert bounds {_aab} or {_sphere} don't contain {_points::*} with "OR failed to contain points"
 
     assert bound {_aab} doesn't contain vector(1,1,1) or vector(0, -1, 0) with "aab contained both OR points unexpectedly"
