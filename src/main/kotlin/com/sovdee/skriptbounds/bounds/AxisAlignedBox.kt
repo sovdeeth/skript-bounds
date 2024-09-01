@@ -7,10 +7,23 @@ import com.sovdee.skriptbounds.math.midpoint
 import org.joml.Intersectiond
 import org.joml.Vector3d
 
+/**
+ * A class representing an axis-aligned bounding box (AABB).
+ *
+ * @property min The minimum coordinates of the bounding box.
+ * @property max The maximum coordinates of the bounding box.
+ */
 data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d) : CuboidBoundingBox {
 
+
     /**
-     * The computed width (x) of the box
+     * Represents the width of the AxisAlignedBox along the x-axis.
+     * The length is computed as the difference between the maximum and minimum x-coordinates.
+     *
+     * Getting the width returns the current width based on the min and max x-coordinates.
+     * Setting the width modifies the min and max x-coordinates such that the center of the box remains unchanged.
+     *
+     * @throws IllegalArgumentException if the provided width is negative.
      */
     override var width: Double
         get() = max.x - min.x
@@ -21,6 +34,15 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
             max.x = mid + value / 2
         }
 
+    /**
+     * Represents the length of the AxisAlignedBox along the z-axis.
+     * The length is computed as the difference between the maximum and minimum z-coordinates.
+     *
+     * Getting the length returns the current length based on the min and max z-coordinates.
+     * Setting the length modifies the min and max z-coordinates such that the center of the box remains unchanged.
+     *
+     * @throws IllegalStateException if the provided length is negative.
+     */
     override var length: Double
         get() = max.z - min.z
         set(value) {
@@ -30,6 +52,15 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
             max.z = mid + value / 2
         }
 
+    /**
+     * Represents the height of the AxisAlignedBox along the y-axis.
+     * The height is computed as the difference between the maximum and minimum y-coordinates.
+     *
+     * Getting the height returns the current height based on the min and max y-coordinates.
+     * Setting the height modifies the min and max y-coordinates such that the center of the box remains unchanged.
+     *
+     * @throws IllegalStateException if the provided height is negative.
+     */
     override var height: Double
         get() = max.y - min.y
         set(value) {
@@ -39,6 +70,13 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
             max.y = mid + value / 2
         }
 
+    /**
+     * Represents the center point of the AxisAlignedBox.
+     *
+     * When getting this value, the midpoint between `min` and `max` is returned.
+     * When setting this value, the bounding box is translated so that its new center point
+     * aligns with the given value.
+     */
     override var center: Vector3d
         get() {
             return min.midpoint(max, Vector3d())
@@ -48,6 +86,11 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
             this.translate(value.sub(currentCenter, currentCenter))
         }
 
+    /**
+     * Rotates the axis-aligned bounding box around the X-axis by 90 degrees.
+     * Effectively swaps the Y and Z components of the bounding box's dimensions.
+     * Assumes the center of rotation is the geometric center of the bounding box.
+     */
     @Suppress("DuplicatedCode")
     fun rotateX() {
         val between = max.sub(min, Vector3d()).div(2.0)
@@ -59,6 +102,11 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
         half.sub(between, min)
     }
 
+    /**
+     * Rotates the axis-aligned bounding box around the Y-axis by 90 degrees.
+     * Effectively swaps the X and Z components of the bounding box's dimensions.
+     * Assumes the center of rotation is the geometric center of the bounding box.
+     */
     @Suppress("DuplicatedCode")
     fun rotateY() {
         val between = max.sub(min, Vector3d()).div(2.0)
@@ -70,6 +118,11 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
         half.sub(between, min)
     }
 
+    /**
+     * Rotates the axis-aligned bounding box around the Z-axis by 90 degrees.
+     * Effectively swaps the X and Y components of the bounding box's dimensions.
+     * Assumes the center of rotation is the geometric center of the bounding box.
+     */
     @Suppress("DuplicatedCode")
     fun rotateZ() {
         val between = max.sub(min, Vector3d()).div(2.0)
@@ -119,10 +172,24 @@ data class AxisAlignedBox(override val min: Vector3d, override val max: Vector3d
         }
     }
 
+    /**
+     * Computes the intersection of this axis-aligned box with another axis-aligned box.
+     *
+     * @param other The other axis-aligned box to intersect with.
+     * @return A new axis-aligned box representing the intersection of this box with the other box.
+     */
     fun intersection(other: AxisAlignedBox): AxisAlignedBox {
         return this.intersection(other, this)
     }
 
+    /**
+     * Computes the intersection of this axis-aligned box with another axis-aligned box.
+     * Updates the destination box with the intersection result.
+     *
+     * @param other The other axis-aligned box to intersect with.
+     * @param dest The destination axis-aligned box to store the intersection result.
+     * @return The destination axis-aligned box containing the intersection.
+     */
     fun intersection(other: AxisAlignedBox, dest: AxisAlignedBox): AxisAlignedBox {
         min.max(other.min, dest.min)
         max.min(other.max, dest.max)
