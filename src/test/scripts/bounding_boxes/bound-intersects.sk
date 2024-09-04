@@ -1,0 +1,31 @@
+test "bound contains":
+    set {_aab} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+    set {_sphere} to spherical bounding box of radius 1 at vector(0.0, 0.0, 0.0)
+
+    assert bound {_aab} intersects bound {_sphere} with "bounds failed to intersect"
+
+    set center of bound {_aab} to vector(10, 10, 10)
+    assert bound {_aab} doesn't intersect bound {_sphere} with "bounds intersected unexpectedly"
+
+
+    set {_aab1} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+    set {_aab2} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+    assert bound {_aab1} intersects bound {_aab2} with "bounds failed to intersect"
+
+    set {_aab1} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+    set {_aab2} to axis aligned bounding box from vector(0,0,1) to vector(1,1,2)
+    assert bound {_aab1} intersects bound {_aab2} with "bounds failed to intersect"
+
+    set {_aab1} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+    set {_aab2} to axis aligned bounding box from vector(0,0,1) to vector(1,1,2)
+    assert bound {_aab1} intersects bound {_aab2} with "bounds failed to intersect"
+
+    assert bound {_aab} doesn't intersect bound {_aab1} and {_aab2} with "bounds intersect unexpectedly"
+
+    set center of bound {_aab} to vector(1, 1, 1)
+    assert bound {_aab} intersects bound {_aab1} and {_aab2} with "bounds failed to intersect"
+
+    assert bound {_aab1} intersects bound {_aab} or {_sphere} with "bounds failed to intersect"
+    assert bound {_aab1} intersects bound {_aab} and {_sphere} with "bounds intersect unexpectedly"
+
+
