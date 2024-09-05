@@ -1,0 +1,73 @@
+test "AABB dimensions":
+    set {_a} to an axis aligned bounding box from vector(0, 0, 0) to location(1, 2, 3, world "world")
+    assert width of bound {_a} is 1 with "wrong bound width"
+    assert length of bound {_a} is 3 with "wrong bound length"
+    assert height of bound {_a} is 2 with "wrong bound height"
+    assert radius of bound {_a} is not set with "wrong bound radius"
+
+    set width of bound {_a} to 5
+    set length of bound {_a} to 6
+    set height of bound {_a} to 7
+    assert width of bound {_a} is 5 with "wrong bound width"
+    assert length of bound {_a} is 6 with "wrong bound length"
+    assert height of bound {_a} is 7 with "wrong bound height"
+    assert radius of bound {_a} is not set with "wrong bound radius"
+
+    set radius of bound {_a} to 5
+    set length of bound {_a} to infinity value
+    set height of bound {_a} to NaN value
+    assert width of bound {_a} is 5 with "wrong bound width"
+    assert length of bound {_a} is 6 with "wrong bound length"
+    assert height of bound {_a} is 7 with "wrong bound height"
+    assert radius of bound {_a} is not set with "wrong bound radius"
+
+    add 4 to width of bound {_a}
+    add -90 to length of bound {_a}
+    add NaN value to height of bound {_a}
+    assert width of bound {_a} is 9 with "wrong bound width"
+    assert length of bound {_a} is 0 with "wrong bound length"
+    assert height of bound {_a} is 7 with "wrong bound height"
+    assert radius of bound {_a} is not set with "wrong bound radius"
+
+    remove 4 from width of bound {_a}
+    remove -90 from length of bound {_a}
+    remove NaN value from height of bound {_a}
+    assert width of bound {_a} is 5 with "wrong bound width"
+    assert length of bound {_a} is 90 with "wrong bound length"
+    assert height of bound {_a} is 7 with "wrong bound height"
+    assert radius of bound {_a} is not set with "wrong bound radius"
+
+
+test "Sphere dimensions":
+    set {_a} to a spherical bounding box of radius 1 at vector(0, 0, 0)
+    assert radius of bound {_a} is 1 with "wrong bound radius"
+    assert width of bound {_a} is not set with "wrong bound width"
+    assert length of bound {_a} is not set with "wrong bound length"
+    assert height of bound {_a} is not set with "wrong bound height"
+
+    set radius of bound {_a} to 5
+    assert radius of bound {_a} is 5 with "wrong bound radius"
+    assert width of bound {_a} is not set with "wrong bound width"
+    assert length of bound {_a} is not set with "wrong bound length"
+    assert height of bound {_a} is not set with "wrong bound height"
+
+    set radius of bound {_a} to infinity value
+    set length of bound {_a} to 5
+    assert radius of bound {_a} is 5 with "wrong bound radius"
+    assert width of bound {_a} is not set with "wrong bound width"
+    assert length of bound {_a} is not set with "wrong bound length"
+    assert height of bound {_a} is not set with "wrong bound height"
+
+    add -90 to radius of bound {_a}
+    add 5 to length of bound {_a}
+    assert radius of bound {_a} is 0 with "wrong bound radius"
+    assert width of bound {_a} is not set with "wrong bound width"
+    assert length of bound {_a} is not set with "wrong bound length"
+    assert height of bound {_a} is not set with "wrong bound height"
+
+    remove -4 from radius of bound {_a}
+    remove 90 from length of bound {_a}
+    assert radius of bound {_a} is 4 with "wrong bound radius"
+    assert width of bound {_a} is not set with "wrong bound width"
+    assert length of bound {_a} is not set with "wrong bound length"
+    assert height of bound {_a} is not set with "wrong bound height"

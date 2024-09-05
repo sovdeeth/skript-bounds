@@ -1,11 +1,34 @@
 package com.sovdee.skriptbounds.bounds
 
+import com.google.common.base.Preconditions
 import com.sovdee.skriptbounds.math.square
 import org.joml.Intersectiond
 import org.joml.Vector3d
 import kotlin.math.sqrt
 
-data class Sphere(val center: Vector3d, var radiusSquared: Double) : BoundingBox {
+/**
+ * Represents a 3D spherical bounding box with a center point and a radius squared value.
+ *
+ * @property center The center point of the sphere in 3-dimensional space.
+ * @property radiusSquared The square of the radius of the sphere.
+ */
+data class Sphere(override var center: Vector3d, var radiusSquared: Double) : BoundingBox {
+
+    /**
+     * Represents the radius of the sphere.
+     *
+     * The `radius` property calculates the sphere's radius based on the `radiusSquared` value.
+     * When setting a new radius, it ensures the radius is non-negative and updates the
+     * `radiusSquared` value accordingly.
+     *
+     * @throws IllegalArgumentException if radius < 0.
+     */
+    var radius: Double
+        get() = sqrt(radiusSquared)
+        set(value) {
+            Preconditions.checkState(value >= 0, "radius must be >= 0: $value")
+            radiusSquared = value * value
+        }
 
     override fun scale(scalingFactor: Double) {
         radiusSquared *= scalingFactor * scalingFactor

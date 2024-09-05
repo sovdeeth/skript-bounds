@@ -1,0 +1,42 @@
+test "bound centers":
+    set {_aab} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+    set {_sphere} to spherical bounding box of radius 1 at vector(0.5, -1, 3)
+
+    assert center of bound {_aab} is vector(0.5, 0.5, 0.5) with "wrong aab center"
+    assert center of bound {_sphere} is vector(0.5, -1, 3) with "wrong sphere center"
+    assert radius of bound {_sphere} is 1 with "wrong sphere radius"
+    assert width of bound {_aab} is 1 with "wrong aab width"
+    assert length of bound {_aab} is 1 with "wrong aab length"
+    assert height of bound {_aab} is 1 with "wrong aab height"
+
+    add vector(1,0,0) to center of bound {_aab} and {_sphere}
+    assert center of bound {_aab} is vector(1.5, 0.5, 0.5) with "wrong aab center"
+    assert center of bound {_sphere} is vector(1.5, -1, 3) with "wrong sphere center"
+    assert radius of bound {_sphere} is 1 with "wrong sphere radius"
+    assert width of bound {_aab} is 1 with "wrong aab width"
+    assert length of bound {_aab} is 1 with "wrong aab length"
+    assert height of bound {_aab} is 1 with "wrong aab height"
+
+    remove vector(0,0,1) from center of bound {_aab} and {_sphere}
+    assert center of bound {_aab} is vector(1.5, 0.5, -0.5) with "wrong aab center"
+    assert center of bound {_sphere} is vector(1.5, -1, 2) with "wrong sphere center"
+    assert radius of bound {_sphere} is 1 with "wrong sphere radius"
+    assert width of bound {_aab} is 1 with "wrong aab width"
+    assert length of bound {_aab} is 1 with "wrong aab length"
+    assert height of bound {_aab} is 1 with "wrong aab height"
+
+    set center of bound {_aab} and {_sphere} to vector(0, infinity value, NaN value)
+    assert center of bound {_aab} is vector(1.5, 0.5, -0.5) with "wrong aab center"
+    assert center of bound {_sphere} is vector(1.5, -1, 2) with "wrong sphere center"
+    assert radius of bound {_sphere} is 1 with "wrong sphere radius"
+    assert width of bound {_aab} is 1 with "wrong aab width"
+    assert length of bound {_aab} is 1 with "wrong aab length"
+    assert height of bound {_aab} is 1 with "wrong aab height"
+
+    set center of bound {_aab} and {_sphere} to vector(0, 0, 0)
+    assert center of bound {_aab} is vector(0, 0, 0) with "wrong aab center"
+    assert center of bound {_sphere} is vector(0, 0, 0) with "wrong sphere center"
+    assert radius of bound {_sphere} is 1 with "wrong sphere radius"
+    assert width of bound {_aab} is 1 with "wrong aab width"
+    assert length of bound {_aab} is 1 with "wrong aab length"
+    assert height of bound {_aab} is 1 with "wrong aab height"

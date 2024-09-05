@@ -1,5 +1,0 @@
-test "AABB dimensions":
-    set {_a} to an axis aligned bounding box from vector(0, 0, 0) to location(1, 2, 3, world "world")
-    assert bound width of {_a} is 1 with "wrong bound width"
-    assert bound length of {_a} is 3 with "wrong bound length"
-    assert bound height of {_a} is 2 with "wrong bound height"

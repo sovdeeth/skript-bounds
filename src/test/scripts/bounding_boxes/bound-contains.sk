@@ -1,0 +1,48 @@
+test "bound contains":
+    set {_aab} to axis aligned bounding box from vector(0,0,0) to vector(1,1,1)
+    set {_sphere} to spherical bounding box of radius 1 at vector(0.0, 0.0, 0.0)
+
+    set {_point} to vector(0,0,0)
+    assert bound {_aab} contains {_point} with "aab failed to contain origin"
+    assert bound {_sphere} contains {_point} with "sphere failed to contain origin"
+    assert bounds {_aab} and {_sphere} contain {_point} with "AND failed to contain origin"
+    assert bounds {_aab} or {_sphere} contain {_point} with "OR failed to contain origin"
+
+    set {_point} to vector(1,1,1)
+    assert bound {_aab} contains {_point} with "aab failed to contain point"
+    assert bound {_sphere} doesn't contain {_point} with "sphere contained point unexpectedly"
+    assert bounds {_aab} and {_sphere} don't contain {_point} to fail with "AND failed to contain point"
+    assert bounds {_aab} and {_sphere} contains {_point} to fail with "AND failed to not contain point"
+    assert bounds {_aab} or {_sphere} contain {_point} with "OR failed to contain point"
+    assert bounds {_aab} or {_sphere} don't contain {_point} with "OR failed to not contain point"
+
+    set {_point} to vector(1,2,1)
+    assert bound {_aab} doesn't contain {_point} with "aab failed to contain point"
+    assert bound {_sphere} doesn't contain {_point} with "sphere contained point unexpectedly"
+    assert bounds {_aab} and {_sphere} don't contain {_point} with "AND contained point unexpectedly"
+    assert bounds {_aab} or {_sphere} don't contain {_point} with "OR contained point unexpectedly"
+
+    set {_points::*} to vector(0,0,0), vector(0.5, 0, 0.25)
+    assert bound {_aab} contains {_points::*} with "aab failed to contain points"
+    assert bound {_sphere} contains {_points::*} with "sphere failed to contain points"
+    assert bounds {_aab} and {_sphere} contains {_points::*} with "AND failed to contain points"
+    assert bounds {_aab} or {_sphere} contains {_points::*} with "OR failed to contain points"
+
+    set {_points::*} to vector(1,2,3), vector(4, 5, 6)
+    assert bound {_aab} doesn't contain {_points::*} with "aab contained points unexpectedly"
+    assert bound {_sphere} doesn't contain {_points::*} with "sphere contained points unexpectedly"
+    assert bounds {_aab} and {_sphere} don't contain {_points::*} with "AND contained points unexpectedly"
+    assert bounds {_aab} or {_sphere} don't contain {_points::*} with "OR contained points unexpectedly"
+
+    set {_points::*} to vector(-0.5,0,0), vector(0, -1, 0)
+    assert bound {_aab} doesn't contain {_points::*} with "aab contained points unexpectedly"
+    assert bound {_sphere} contains {_points::*} with "sphere failed to contain points"
+    assert bounds {_aab} and {_sphere} don't contain {_points::*} to fail with "AND failed to contain any point"
+    assert bounds {_aab} and {_sphere} contain {_points::*} to fail with "AND failed to not contain any point"
+    assert bounds {_aab} or {_sphere} don't contain {_points::*} with "OR failed to contain points"
+
+    assert bound {_aab} contains vector(1,1,1) or vector(0, -1, 0) with "aab contained no OR points unexpectedly"
+    assert bound {_aab} contains vector(1,1,1) or vector(0, -1, 0) with "aab failed to contain OR points"
+    assert bound {_sphere} contain vector(1,1,1) or vector(0, -1, 0) with "sphere failed to contain OR points"
+    assert bounds {_aab} and {_sphere} contain vector(1,1,1) or vector(0, -1, 0) with "AND failed to contain OR points"
+    assert bounds {_aab} or {_sphere} contain vector(1,1,1) or vector(0, -1, 0) with "OR failed to contain OR points"
